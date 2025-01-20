@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <title>Eventos App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        h3 a {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s;
+        }
+
+        h3 a:hover {
+            color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f8f8f8;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Lista de Eventos</h1>
+        <h3>
+            <a href="/eventos/cadastro">Cadastrar Eventos</a>
+        </h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Local</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Itera sobre a lista de eventos -->
+                <tr th:each="evento : ${evento}">
+                    <td>
+                        <a th:href="@{/eventos/{codigo}(codigo=${evento.codigo})}" style="text-decoration: none; color: #007bff;">
+                            <span th:text="${evento.nome}">Nome do Evento</span>
+                        </a>
+                    </td>
+                    <td th:text="${evento.local}">Local do Evento</td>
+                    <td th:text="${evento.data}">Data do Evento</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

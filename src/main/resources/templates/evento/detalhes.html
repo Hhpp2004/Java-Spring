@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Detalhes do Evento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        h3 a {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s;
+        }
+
+        h3 a:hover {
+            color: #0056b3;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .center-text {
+            text-align: center;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Detalhes do Evento</h1>
+        <h3>
+            <a href="/eventos/lista">Lista de Eventos</a>
+        </h3>
+
+        <div th:if="${evento != null}">
+            <p>Nome: <span th:text="${evento.nome}"></span></p>
+            <p>Local: <span th:text="${evento.local}"></span></p>
+            <p>Data: <span th:text="${evento.data}"></span></p>
+            <p>Horário: <span th:text="${evento.horario}"></span></p>
+        </div>
+
+        <div th:if="${evento == null}">
+            <p>Evento não encontrado.</p>
+        </div>
+
+        <form method="post" th:action="@{'/eventos/detalhes?codigo=' + ${evento.codigo}}">
+            <div>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required maxlength="100" placeholder="Seu nome" />
+            </div>
+            <div>
+                <label for="rg">RG:</label>
+                <input type="text" id="rg" name="rg" required maxlength="15" placeholder="Seu RG" />
+            </div>
+            <button type="submit">Adicionar</button>
+        </form>
+
+        <h5 class="center-text">Lista de Convidados:</h5>
+        <div th:each="convidado : ${convidados}">
+            <p>Nome: <span th:text="${convidado.nome}"></span></p>
+            <p>RG: <span th:text="${convidado.rg}"></span></p>
+        </div>
+
+        <div th:if="${#lists.isEmpty(convidados)}">
+            <p>Nenhum convidado encontrado.</p>
+        </div>
+    </div>
+</body>
+
+</html>
