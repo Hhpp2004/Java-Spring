@@ -1,5 +1,7 @@
 package com.example.eventos.model;
 
+import javax.validation.constraints.NotEmpty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -8,7 +10,9 @@ import jakarta.persistence.ManyToOne;
 public class Convidado {
 
     @Id
+    @NotEmpty
     private String rg;
+    @NotEmpty
     private String nome; 
     @ManyToOne
     private Evento_model evento;

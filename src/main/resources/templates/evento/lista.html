@@ -1,90 +1,81 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <title>Eventos App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Eventos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f8f9fa;
+            color: #343a40;
             margin: 0;
-            padding: 0;
+            padding: 20px;
         }
-
         .container {
-            width: 80%;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
         h1 {
-            color: #333;
             text-align: center;
+            margin-bottom: 20px;
         }
-
         h3 a {
             text-decoration: none;
             color: #007bff;
-            transition: color 0.3s;
         }
-
-        h3 a:hover {
-            color: #0056b3;
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .card h2 {
+            margin-top: 0;
         }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+        .card p {
+            margin: 5px 0;
         }
-
-        th {
-            background-color: #f8f8f8;
+        .delete-icon {
+            color: #6c757d; /* Cor cinza */
         }
-
-        tr:hover {
-            background-color: #f1f1f1;
+        .btn-small {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-small:hover .delete-icon {
+            color: #dc3545; /* Cor vermelha ao passar o mouse */
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
 <body>
     <div class="container">
         <h1>Lista de Eventos</h1>
         <h3>
             <a href="/eventos/cadastro">Cadastrar Eventos</a>
         </h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Local</th>
-                    <th>Data</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Itera sobre a lista de eventos -->
-                <tr th:each="evento : ${evento}">
-                    <td>
-                        <a th:href="@{/eventos/{codigo}(codigo=${evento.codigo})}" style="text-decoration: none; color: #007bff;">
-                            <span th:text="${evento.nome}">Nome do Evento</span>
-                        </a>
-                    </td>
-                    <td th:text="${evento.local}">Local do Evento</td>
-                    <td th:text="${evento.data}">Data do Evento</td>
-                </tr>
-            </tbody>
-        </table>
+        <div th:each="evento : ${evento}" class="card">
+            <h2>
+                <a th:href="@{/eventos/{codigo}(codigo=${evento.codigo})}" style="text-decoration: none; color: #007bff;">
+                    <span th:text="${evento.nome}">Nome do Evento</span>
+                </a>
+            </h2>
+            <p><strong>Local:</strong> <span th:text="${evento.local}">Local do Evento</span></p>
+            <p><strong>Data:</strong> <span th:text="${evento.data}">Data do Evento</span></p>
+            <form th:action="@{/eventos/deletar/{codigo}(codigo=${evento.codigo})}" method="post" style="display:inline;">
+                <button type="submit" class="btn-small">
+                    <i class="fas fa-trash-alt delete-icon"></i>
+                </button>
+            </form>
+        </div>
     </div>
 </body>
-
 </html>

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Evento</title>
     <style>
         body {
@@ -100,7 +102,8 @@
             <p>Evento não encontrado.</p>
         </div>
 
-        <form method="post" th:action="@{'/eventos/detalhes?codigo=' + ${evento.codigo}}">
+        <form method="post" th:action="@{/eventos/{codigo}(codigo=${evento.codigo})}">
+            <input type="hidden" name="codigo" th:value="${evento.codigo}" />
             <div>
                 <label for="nome">Nome:</label>
                 <input type="text" id="nome" name="nome" required maxlength="100" placeholder="Seu nome" />
@@ -113,14 +116,10 @@
         </form>
 
         <h5 class="center-text">Lista de Convidados:</h5>
-        <div th:each="convidado : ${convidados}">
+        <div th:each="convidado : ${convidado}">
             <p>Nome: <span th:text="${convidado.nome}"></span></p>
             <p>RG: <span th:text="${convidado.rg}"></span></p>
-        </div>
-
-        <div th:if="${#lists.isEmpty(convidados)}">
-            <p>Nenhum convidado encontrado.</p>
-        </div>
+        </div>        
     </div>
 </body>
 
