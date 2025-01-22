@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,119 +7,118 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f8f9fa;
+            color: #343a40;
             margin: 0;
-            padding: 0;
+            padding: 20px;
         }
-
         .container {
-            width: 50%;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
         h1 {
-            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .center-text {
             text-align: center;
         }
-
-        h3 a {
-            text-decoration: none;
-            color: #007bff;
-            transition: color 0.3s;
+        .btn-small {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
         }
-
-        h3 a:hover {
-            color: #0056b3;
+        .delete-icon {
+            color: #6c757d; /* Cor cinza */
         }
-
-        form {
-            display: flex;
-            flex-direction: column;
+        .btn-small:hover .delete-icon {
+            color: #dc3545; /* Cor vermelha ao passar o mouse */
         }
-
-        form div {
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card h2 {
+            margin-top: 0;
+        }
+        .card p {
+            margin: 5px 0;
+        }
+        .form-group {
             margin-bottom: 15px;
         }
-
-        label {
+        .form-group label {
+            display: block;
             margin-bottom: 5px;
-            font-weight: bold;
         }
-
-        input[type="text"] {
+        .form-group input {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            padding: 8px;
             box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
-
-        button {
-            padding: 10px 20px;
+        .form-group button {
             background-color: #007bff;
             color: #fff;
             border: none;
-            border-radius: 4px;
+            padding: 10px 15px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
-
-        button:hover {
+        .form-group button:hover {
             background-color: #0056b3;
         }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .center-text {
-            text-align: center;
-            font-size: 1.5em;
-        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
 <body>
     <div class="container">
         <h1>Detalhes do Evento</h1>
         <h3>
-            <a href="/eventos/lista">Lista de Eventos</a>
+            <a th:href="@{/eventos/lista}">Lista de Eventos</a>
         </h3>
-
-        <div th:if="${evento != null}">
-            <p>Nome: <span th:text="${evento.nome}"></span></p>
-            <p>Local: <span th:text="${evento.local}"></span></p>
-            <p>Data: <span th:text="${evento.data}"></span></p>
-            <p>Horário: <span th:text="${evento.horario}"></span></p>
-        </div>
+        <p>Data: <span th:text="${evento.data}"></span></p>
+        <p>Horário: <span th:text="${evento.horario}"></span></p>
 
         <div th:if="${evento == null}">
             <p>Evento não encontrado.</p>
         </div>
 
-        <form method="post" th:action="@{/eventos/{codigo}(codigo=${evento.codigo})}">
+        <form th:action="@{/eventos/detalhes/{codigo}(codigo=${evento.codigo})}" method="post">
             <input type="hidden" name="codigo" th:value="${evento.codigo}" />
-            <div>
+            <div class="form-group">
                 <label for="nome">Nome:</label>
                 <input type="text" id="nome" name="nome" required maxlength="100" placeholder="Seu nome" />
             </div>
-            <div>
+            <div class="form-group">
                 <label for="rg">RG:</label>
                 <input type="text" id="rg" name="rg" required maxlength="15" placeholder="Seu RG" />
             </div>
-            <button type="submit">Adicionar</button>
+            <div class="form-group">
+                <button type="submit">Adicionar</button>
+            </div>
         </form>
 
         <h5 class="center-text">Lista de Convidados:</h5>
-        <div th:each="convidado : ${convidado}">
-            <p>Nome: <span th:text="${convidado.nome}"></span></p>
-            <p>RG: <span th:text="${convidado.rg}"></span></p>
+        <div th:each="convidado : ${convidado}" class="card">
+            <p><strong>Nome:</strong> <span th:text="${convidado.nome}"></span></p>
+            <p><strong>RG:</strong> <span th:text="${convidado.rg}"></span></p>
+            <form th:action="@{/eventos/detalhes/deletar/{id}(id=${convidado.id})}" method="post" style="display:inline;">
+                <input type="hidden" name="codigo" th:value="${evento.codigo}" />
+                <button type="submit" class="btn-small">
+                    <i class="fas fa-trash-alt delete-icon"></i> Deletar
+                </button>
+            </form>
         </div>        
     </div>
 </body>
-
 </html>

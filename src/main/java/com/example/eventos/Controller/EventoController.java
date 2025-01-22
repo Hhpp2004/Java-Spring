@@ -64,7 +64,7 @@ public class EventoController {
     }
 
     // TODO aqui está ok
-    @PostMapping("/{codigo}")
+    @PostMapping("/eventos/detalhes/{codigo}")
     public String detalhes_eventos_2(@PathVariable("codigo") long codigo, Convidado pessoa) {
         Evento_model evento = er.findByCodigo(codigo);
         if (evento == null) {
@@ -75,7 +75,7 @@ public class EventoController {
             System.out.println(pessoa);
             return "redirect:/eventos/" + codigo;
         }
-    }
+    }  
 
     @PostMapping("/deletar/{codigo}")
     public String deletarEvento(@PathVariable Long codigo) {
@@ -90,15 +90,17 @@ public class EventoController {
         }
         return "redirect:/eventos/lista";
     }
+    
+   
 
-    @PostMapping("/eventos/detalhes")
-    public String adicionarConvidado(@PathVariable("codigo") long codigo,Convidado pessoa) {
-        Evento_model evento = er.findByCodigo(codigo);
-        if (evento != null) {
-           pessoa.setEvento(evento);
-           cv.save(pessoa);        
-        }
-        return "redirect:/eventos/detalhes?codigo=" + codigo;
-    }
-
+    @PostMapping("detalhes/deletar/{codigo}")
+    public String deletar_convidado(String rg)
+    {
+        Convidado conv = cv.findByRg(rg);
+        cv.delete(conv);
+        Evento_model evento = conv.getEvento();
+        long cod = evento.getCodigo();
+        String codigo = ""+cod;
+        return "redirect:/eventos/"+codigo;
+    }    
 }
