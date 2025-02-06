@@ -84,8 +84,9 @@
     <div class="container">
         <h1>Detalhes do Evento</h1>
         <h3>
-            <a th:href="@{/eventos/lista}">Lista de Eventos</a>
+            <a th:href="@{/lista}">Voltar para a Lista de Eventos</a>
         </h3>
+        <p>Local: <span th:text="${evento.local}"></span></p>
         <p>Data: <span th:text="${evento.data}"></span></p>
         <p>Horário: <span th:text="${evento.horario}"></span></p>
 
@@ -93,7 +94,7 @@
             <p>Evento não encontrado.</p>
         </div>
 
-        <form th:action="@{/eventos/detalhes/{codigo}(codigo=${evento.codigo})}" method="post">
+        <form th:action="@{/detalhes/{codigo}(codigo=${evento.codigo})}" method="post" th:if="${evento != null}">
             <input type="hidden" name="codigo" th:value="${evento.codigo}" />
             <div class="form-group">
                 <label for="nome">Nome:</label>
@@ -109,15 +110,15 @@
         </form>
 
         <h5 class="center-text">Lista de Convidados:</h5>
-        <div th:each="convidado : ${convidado}" class="card">
-            <p><strong>Nome:</strong> <span th:text="${convidado.nome}"></span></p>
-            <p><strong>RG:</strong> <span th:text="${convidado.rg}"></span></p>
-            <form th:action="@{/eventos/detalhes/deletar/{id}(id=${convidado.id})}" method="post" style="display:inline;">
+        <div th:each="pessoa : ${pessoas}" class="card">
+            <p>Nome:<span th:text="${pessoa.nome}"></span></p>
+            <p>RG:<span th:text="${pessoa.rg}"></span></p>
+            <form th:action="@{/convidados/deletar/{rg}(rg=${pessoa.rg})}" th:method="delete" style="display:inline;">
                 <input type="hidden" name="codigo" th:value="${evento.codigo}" />
                 <button type="submit" class="btn-small">
                     <i class="fas fa-trash-alt delete-icon"></i> Deletar
                 </button>
-            </form>
+            </form>            
         </div>        
     </div>
 </body>
