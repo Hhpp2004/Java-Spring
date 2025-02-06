@@ -68,6 +68,7 @@
                     <span th:text="${evento.nome}">Nome do Evento</span>
                 </a>
             </h2>
+            <p><strong>Evento:</strong><span th:text="${evento.nome}">Evento</p>
             <p><strong>Local:</strong> <span th:text="${evento.local}">Local do Evento</span></p>
             <p><strong>Data:</strong> <span th:text="${evento.data}">Data do Evento</span></p>
             <form th:action="@{/deletar/{codigo}(codigo=${evento.codigo})}" method="post" style="display:inline;">

@@ -86,6 +86,7 @@
         <h3>
             <a th:href="@{/lista}">Voltar para a Lista de Eventos</a>
         </h3>
+        <p>Evento: <span th:text= "${evento.nome}"></span></p>
         <p>Local: <span th:text="${evento.local}"></span></p>
         <p>Data: <span th:text="${evento.data}"></span></p>
         <p>Horário: <span th:text="${evento.horario}"></span></p>
