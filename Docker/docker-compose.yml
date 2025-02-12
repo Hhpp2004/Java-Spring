@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=@He26082004
+      - MYSQL_DATABASE=eventos
+      - MYSQL_ROOT_PASSWORD=@He26082004
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
