@@ -32,3 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 Docker
+src/main/java/com/example/eventos/Controller/WebConfig.java

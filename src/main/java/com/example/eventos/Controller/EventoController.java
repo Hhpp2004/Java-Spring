@@ -3,7 +3,6 @@ package com.example.eventos.Controller;
 import com.example.eventos.model.*;
 
 import lombok.extern.log4j.Log4j2;
-
 import com.example.eventos.Repository.*;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,28 +12,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Log4j2
 @Controller
-public class EventoController {
-
-    
+public class EventoController {  
 
     @Autowired
     private EventoRepository er;
-
+    
     @Autowired
     private ConvidadoRepository cr;
-
-    
-
-    @GetMapping("/favicon.ico")
-    @ResponseBody
-    void returnNoFavicon() {
-        // Não faz nada, apenas evita o erro 404
-    }
 
     @PostMapping("/deletar/{codigo}")
     public String deletarEvento(@PathVariable Long codigo) {
@@ -83,7 +71,6 @@ public class EventoController {
             mv.addObject("pessoas", convidados);
             return mv;
         }
-
     }
 
     @DeleteMapping("/convidados/deletar/{rg}")
