@@ -33,3 +33,4 @@ build/
 .vscode/
 Docker
 src/main/java/com/example/eventos/Controller/WebConfig.java
+/src/main/java/com/example/eventos/Database
